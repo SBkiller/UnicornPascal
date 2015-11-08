@@ -64,7 +64,7 @@ procedure HookCode(uc: uc_engine; address: UInt64; size: Cardinal; user_data: Po
 var
 	eflags: integer;
 begin
-  WriteLn(Format('>>> Tracing instruction at 0x%, instruction size = 0x%x', [address, size]));
+  WriteLn(Format('>>> Tracing instruction at 0x%x, instruction size = 0x%x', [address, size]));
   uc_reg_read(uc, UC_X86_REG_EFLAGS, @eflags);
   WriteLn(Format('>>> --- EFLAGS is 0x%x', [eflags]));
 end;
