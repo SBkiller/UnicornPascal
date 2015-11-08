@@ -45,7 +45,7 @@ end;
 
 procedure HookCode(uc: uc_engine; address: UInt64; size: Cardinal; user_data: Pointer); cdecl;
 begin
-  WriteLn(Format('>>> Tracing instruction at 0x%, instruction size = 0x%x', [address, size]));
+  WriteLn(Format('>>> Tracing instruction at 0x%x, instruction size = 0x%x', [address, size]));
 end;
 
 procedure TestSparc;

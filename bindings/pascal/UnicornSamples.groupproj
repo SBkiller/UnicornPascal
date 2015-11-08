@@ -12,6 +12,9 @@
         <Projects Include="SampleSparc.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="SampleMips.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +50,23 @@
     <Target Name="SampleSparc:Make">
         <MSBuild Projects="SampleSparc.dproj" Targets="Make"/>
     </Target>
+    <Target Name="SampleMips">
+        <MSBuild Projects="SampleMips.dproj"/>
+    </Target>
+    <Target Name="SampleMips:Clean">
+        <MSBuild Projects="SampleMips.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SampleMips:Make">
+        <MSBuild Projects="SampleMips.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="SampleArm64;SampleX86;SampleSparc"/>
+        <CallTarget Targets="SampleArm64;SampleX86;SampleSparc;SampleMips"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="SampleArm64:Clean;SampleX86:Clean;SampleSparc:Clean"/>
+        <CallTarget Targets="SampleArm64:Clean;SampleX86:Clean;SampleSparc:Clean;SampleMips:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="SampleArm64:Make;SampleX86:Make;SampleSparc:Make"/>
+        <CallTarget Targets="SampleArm64:Make;SampleX86:Make;SampleSparc:Make;SampleMips:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
