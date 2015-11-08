@@ -74,7 +74,7 @@ procedure HookCode64(uc: uc_engine; address: UInt64; size: Cardinal; user_data: 
 var
 	rip: UInt64;
 begin
-  WriteLn(Format('>>> Tracing instruction at 0x%, instruction size = 0x%x', [address, size]));
+  WriteLn(Format('>>> Tracing instruction at 0x%x, instruction size = 0x%x', [address, size]));
   uc_reg_read(uc, UC_X86_REG_RIP, @rip);
   WriteLn(Format('>>> --- RIP is 0x%x', [rip]));
 end;
@@ -107,7 +107,7 @@ begin
       end;
     UC_MEM_WRITE:
     	begin
-        WriteLn(Format('>>> Memory is being WRITE at 0x%, data size = %u, data value = 0x%', [address, size, value]));
+        WriteLn(Format('>>> Memory is being WRITE at 0x%x, data size = %u, data value = 0x%x', [address, size, value]));
       end;
 	end;
 end;
