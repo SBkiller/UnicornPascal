@@ -1,6 +1,6 @@
 # UnicornPascal
 
-Pascal language binding for the [Unicorn emulatorr](http://www.unicorn-engine.org/)
+Pascal language binding for the [Unicorn emulator](http://www.unicorn-engine.org/)
 ([GitHub](https://github.com/unicorn-engine/unicorn)).
 
 ## License
