@@ -9,6 +9,9 @@
         <Projects Include="SampleX86.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="SampleSparc.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="SampleX86:Make">
         <MSBuild Projects="SampleX86.dproj" Targets="Make"/>
     </Target>
+    <Target Name="SampleSparc">
+        <MSBuild Projects="SampleSparc.dproj"/>
+    </Target>
+    <Target Name="SampleSparc:Clean">
+        <MSBuild Projects="SampleSparc.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SampleSparc:Make">
+        <MSBuild Projects="SampleSparc.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="SampleArm64;SampleX86"/>
+        <CallTarget Targets="SampleArm64;SampleX86;SampleSparc"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="SampleArm64:Clean;SampleX86:Clean"/>
+        <CallTarget Targets="SampleArm64:Clean;SampleX86:Clean;SampleSparc:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="SampleArm64:Make;SampleX86:Make"/>
+        <CallTarget Targets="SampleArm64:Make;SampleX86:Make;SampleSparc:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
