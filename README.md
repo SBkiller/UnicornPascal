@@ -3,6 +3,9 @@
 Pascal language binding for the [Unicorn emulator](http://www.unicorn-engine.org/)
 ([GitHub](https://github.com/unicorn-engine/unicorn)).
 
+*Unicorn* is a lightweight multi-platform, multi-architecture CPU emulator framework
+based on [QEMU](http://www.qemu.org/).
+
 ## License
 
 GPL
