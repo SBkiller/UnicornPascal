@@ -3,7 +3,7 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="9"/>
-    <BuildModes Count="2" Active="64-Release">
+    <BuildModes Count="1" Active="64-Release">
       <Item1 Name="32-Release">
         <CompilerOptions>
           <Version Value="11"/>
@@ -36,46 +36,10 @@
           </Other>
         </CompilerOptions>
       </Item1>
-      <Item2 Name="64-Debug">
-        <CompilerOptions>
-          <Version Value="11"/>
-          <PathDelim Value="\"/>
-          <SearchPaths>
-            <IncludeFiles Value="unicorn"/>
-            <OtherUnitFiles Value="unicorn"/>
-            <UnitOutputDirectory Value="fpc\$(TargetCPU)-$(TargetOS)"/>
-          </SearchPaths>
-          <Parsing>
-            <SyntaxOptions>
-              <SyntaxMode Value="Delphi"/>
-              <IncludeAssertionCode Value="True"/>
-            </SyntaxOptions>
-          </Parsing>
-          <CodeGeneration>
-            <Checks>
-              <IOChecks Value="True"/>
-              <RangeChecks Value="True"/>
-              <OverflowChecks Value="True"/>
-              <StackChecks Value="True"/>
-            </Checks>
-            <TargetCPU Value="x86_64"/>
-          </CodeGeneration>
-          <Linking>
-            <Debugging>
-              <DebugInfoType Value="dsDwarf2Set"/>
-              <UseHeaptrc Value="True"/>
-              <UseExternalDbgSyms Value="True"/>
-            </Debugging>
-          </Linking>
-          <Other>
-            <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
-          </Other>
-        </CompilerOptions>
-      </Item2>
     </BuildModes>
     <Units Count="4">
       <Unit0>
-        <Filename Value="SampleX86.dpr"/>
+        <Filename Value="SampleSparc.dpr"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
         <UsageCount Value="20"/>
@@ -83,17 +47,14 @@
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
-        <Filename Value="unicorn\Unicorn.pas"/>
+        <Filename Value="unicorn\SparcConst.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
         <UsageCount Value="20"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
       <Unit2>
-        <Filename Value="unicorn\UnicornConst.pas"/>
+        <Filename Value="unicorn\Unicorn.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
@@ -103,13 +64,17 @@
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
       <Unit3>
-        <Filename Value="unicorn\X86Const.pas"/>
+        <Filename Value="unicorn\UnicornConst.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
         <UsageCount Value="20"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
     </Units>
     <JumpHistory HistoryIndex="-1"/>
   </ProjectSession>
+  <SkipCheckLCLInterfaces Value="True"/>
 </CONFIG>

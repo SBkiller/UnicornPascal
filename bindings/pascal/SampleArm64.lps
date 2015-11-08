@@ -3,7 +3,7 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="9"/>
-    <BuildModes Active="64-Release"/>
+    <BuildModes Active="64-Debug"/>
     <Units Count="4">
       <Unit0>
         <Filename Value="SampleArm64.dpr"/>

@@ -11,7 +11,7 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="SampleX86"/>
+      <Title Value="SampleMips"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -21,14 +21,14 @@
     <VersionInfo>
       <StringTable ProductVersion=""/>
     </VersionInfo>
-    <BuildModes Count="2">
+    <BuildModes Count="3">
       <Item1 Name="32-Debug" Default="True"/>
-      <Item2 Name="64-Release">
+      <Item2 Name="32-Release">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <SearchPaths>
-            <IncludeFiles Value="unicorn;$(ProjOutDir)"/>
+            <IncludeFiles Value="unicorn"/>
             <OtherUnitFiles Value="unicorn"/>
             <UnitOutputDirectory Value="fpc\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
@@ -39,7 +39,7 @@
           </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
-            <TargetCPU Value="x86_64"/>
+            <TargetCPU Value="i386"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
@@ -55,6 +55,42 @@
           </Other>
         </CompilerOptions>
       </Item2>
+      <Item3 Name="64-Debug">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <SearchPaths>
+            <IncludeFiles Value="unicorn"/>
+            <OtherUnitFiles Value="unicorn"/>
+            <UnitOutputDirectory Value="fpc\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+              <IncludeAssertionCode Value="True"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+            <TargetCPU Value="x86_64"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf2Set"/>
+              <UseHeaptrc Value="True"/>
+              <UseExternalDbgSyms Value="True"/>
+            </Debugging>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
+          </Other>
+        </CompilerOptions>
+      </Item3>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -71,19 +107,19 @@
     </RequiredPackages>
     <Units Count="4">
       <Unit0>
-        <Filename Value="SampleX86.dpr"/>
+        <Filename Value="SampleMips.dpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="unicorn\Unicorn.pas"/>
+        <Filename Value="unicorn\MipsConst.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="unicorn\UnicornConst.pas"/>
+        <Filename Value="unicorn\Unicorn.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
       <Unit3>
-        <Filename Value="unicorn\X86Const.pas"/>
+        <Filename Value="unicorn\UnicornConst.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
     </Units>
@@ -92,7 +128,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <SearchPaths>
-      <IncludeFiles Value="unicorn"/>
+      <IncludeFiles Value="unicorn;$(ProjOutDir)"/>
       <OtherUnitFiles Value="unicorn"/>
       <UnitOutputDirectory Value="fpc\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
