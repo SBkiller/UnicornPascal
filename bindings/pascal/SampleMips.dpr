@@ -60,7 +60,7 @@ begin
 
   WriteLn('Emulate MIPS code (big-endian)');
 
-  // Initialize emulator in ARM mode
+  // Initialize emulator in MIPS mode
   err := uc_open(UC_ARCH_MIPS, UC_MODE_MIPS32 or UC_MODE_BIG_ENDIAN, &uc);
   if (err <> UC_ERR_OK) then begin
     WriteLn(Format('Failed on uc_open() with error returned: %u (%s)', [err, uc_strerror(err)]));
