@@ -15,6 +15,9 @@
         <Projects Include="SampleMips.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="SampleM68k.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -59,14 +62,23 @@
     <Target Name="SampleMips:Make">
         <MSBuild Projects="SampleMips.dproj" Targets="Make"/>
     </Target>
+    <Target Name="SampleM68k">
+        <MSBuild Projects="SampleM68k.dproj"/>
+    </Target>
+    <Target Name="SampleM68k:Clean">
+        <MSBuild Projects="SampleM68k.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SampleM68k:Make">
+        <MSBuild Projects="SampleM68k.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="SampleArm64;SampleX86;SampleSparc;SampleMips"/>
+        <CallTarget Targets="SampleArm64;SampleX86;SampleSparc;SampleMips;SampleM68k"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="SampleArm64:Clean;SampleX86:Clean;SampleSparc:Clean;SampleMips:Clean"/>
+        <CallTarget Targets="SampleArm64:Clean;SampleX86:Clean;SampleSparc:Clean;SampleMips:Clean;SampleM68k:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="SampleArm64:Make;SampleX86:Make;SampleSparc:Make;SampleMips:Make"/>
+        <CallTarget Targets="SampleArm64:Make;SampleX86:Make;SampleSparc:Make;SampleMips:Make;SampleM68k:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
