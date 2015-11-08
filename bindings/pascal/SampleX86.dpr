@@ -107,7 +107,7 @@ begin
       end;
     UC_MEM_WRITE:
     	begin
-        WriteLn(Format('">>> Memory is being WRITE at 0x%, data size = %u, data value = 0x%', [address, size, value]));
+        WriteLn(Format('>>> Memory is being WRITE at 0x%, data size = %u, data value = 0x%', [address, size, value]));
       end;
 	end;
 end;
@@ -644,7 +644,7 @@ begin
   uc_hook_add_2(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
 
   // tracing all instruction by having @begin > @end
-  uc_hook_add_2(uc, trace2, UC_HOOK_CODE, @HookCode, nil, ADDRESS, ADDRESS + 20);
+  uc_hook_add_2(uc, trace2, UC_HOOK_CODE, @HookCode64, nil, ADDRESS, ADDRESS + 20);
 
   // tracing all memory WRITE access (with @begin > @end)
   uc_hook_add_2(uc, trace3, UC_HOOK_MEM_WRITE, @HookMem64, nil, 1, 0);
