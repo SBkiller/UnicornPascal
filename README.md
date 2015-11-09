@@ -31,10 +31,11 @@ Compiler
 
 ## Examples
 
+* `SampleArm` Emulate ARM
 * `SampleArm64` Emulate ARM64
 * `SampleX86` Emulate 16, 32, 64 Bit x86
 * `SampleSparc` Emulate SPARC
 * `SampleMips` Emulate MIPS
 * `SampleM68k` Emulate m68k
-
+* `shellcode` Sample code to trace code with Linux code with syscall
 

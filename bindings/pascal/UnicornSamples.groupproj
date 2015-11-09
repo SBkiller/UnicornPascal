@@ -18,6 +18,12 @@
         <Projects Include="SampleM68k.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="SampleArm.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="shellcode.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -71,14 +77,32 @@
     <Target Name="SampleM68k:Make">
         <MSBuild Projects="SampleM68k.dproj" Targets="Make"/>
     </Target>
+    <Target Name="SampleArm">
+        <MSBuild Projects="SampleArm.dproj"/>
+    </Target>
+    <Target Name="SampleArm:Clean">
+        <MSBuild Projects="SampleArm.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SampleArm:Make">
+        <MSBuild Projects="SampleArm.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="shellcode">
+        <MSBuild Projects="shellcode.dproj"/>
+    </Target>
+    <Target Name="shellcode:Clean">
+        <MSBuild Projects="shellcode.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="shellcode:Make">
+        <MSBuild Projects="shellcode.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="SampleArm64;SampleX86;SampleSparc;SampleMips;SampleM68k"/>
+        <CallTarget Targets="SampleArm64;SampleX86;SampleSparc;SampleMips;SampleM68k;SampleArm;shellcode"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="SampleArm64:Clean;SampleX86:Clean;SampleSparc:Clean;SampleMips:Clean;SampleM68k:Clean"/>
+        <CallTarget Targets="SampleArm64:Clean;SampleX86:Clean;SampleSparc:Clean;SampleMips:Clean;SampleM68k:Clean;SampleArm:Clean;shellcode:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="SampleArm64:Make;SampleX86:Make;SampleSparc:Make;SampleMips:Make;SampleM68k:Make"/>
+        <CallTarget Targets="SampleArm64:Make;SampleX86:Make;SampleSparc:Make;SampleMips:Make;SampleM68k:Make;SampleArm:Make;shellcode:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
