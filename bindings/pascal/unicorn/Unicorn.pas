@@ -264,7 +264,14 @@ function uc_hook_add_1(uc: uc_engine; var hh: uc_hook; _type: integer;
   callback: Pointer; user_data: Pointer; arg1: integer): uc_err; cdecl external LIB_FILE name 'uc_hook_add';
 function uc_hook_add_2(uc: uc_engine; var hh: uc_hook; _type: integer;
   callback: Pointer; user_data: Pointer; arg1, arg2: UInt64): uc_err; cdecl external LIB_FILE name 'uc_hook_add';
-    
+
+function uc_hook_add(uc: uc_engine; var hh: uc_hook; _type: integer;
+  callback: Pointer; user_data: Pointer): uc_err; overload;
+function uc_hook_add(uc: uc_engine; var hh: uc_hook; _type: integer;
+  callback: Pointer; user_data: Pointer; arg1: UInt64): uc_err; overload;
+function uc_hook_add(uc: uc_engine; var hh: uc_hook; _type: integer;
+  callback: Pointer; user_data: Pointer; arg1, arg2: UInt64): uc_err; overload;
+
 (*
  Unregister (remove) a hook callback.
  This API removes the hook callback registered by uc_hook_add().
@@ -331,5 +338,23 @@ function uc_mem_unmap(uc: uc_engine; address: UInt64; size: Cardinal): uc_err; c
 function uc_mem_protect(uc: uc_engine; address: UInt64; size: Cardinal; perms: UInt32): uc_err; cdecl external LIB_FILE;
   
 implementation
+
+function uc_hook_add(uc: uc_engine; var hh: uc_hook; _type: integer;
+  callback: Pointer; user_data: Pointer): uc_err; overload;
+begin
+  Result := uc_hook_add_0(uc, hh, _type, callback, user_data);
+end;
+
+function uc_hook_add(uc: uc_engine; var hh: uc_hook; _type: integer;
+  callback: Pointer; user_data: Pointer; arg1: UInt64): uc_err; overload;
+begin
+  Result := uc_hook_add_1(uc, hh, _type, callback, user_data, arg1);
+end;
+
+function uc_hook_add(uc: uc_engine; var hh: uc_hook; _type: integer;
+  callback: Pointer; user_data: Pointer; arg1, arg2: UInt64): uc_err; overload;
+begin
+  Result := uc_hook_add_2(uc, hh, _type, callback, user_data, arg1, arg2);
+end;
 
 end.

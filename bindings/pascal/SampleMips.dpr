@@ -77,10 +77,10 @@ begin
   uc_reg_write(uc, UC_MIPS_REG_1, @r1);
 
   // tracing all basic blocks with customized callback
-  uc_hook_add_2(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
+  uc_hook_add(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
 
   // tracing all instructions with customized callback
-  uc_hook_add_2(uc, trace2, UC_HOOK_CODE, @HookCode, nil, ADDRESS, ADDRESS);
+  uc_hook_add(uc, trace2, UC_HOOK_CODE, @HookCode, nil, ADDRESS, ADDRESS);
 
   // emulate machine code in infinite time (last param = 0), or when
   // finishing all the code.
@@ -126,10 +126,10 @@ begin
   uc_reg_write(uc, UC_MIPS_REG_1, @r1);
 
   // tracing all basic blocks with customized callback
-  uc_hook_add_2(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
+  uc_hook_add(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
 
   // tracing all instructions with customized callback
-  uc_hook_add_2(uc, trace2, UC_HOOK_CODE, @HookCode, nil, ADDRESS, ADDRESS);
+  uc_hook_add(uc, trace2, UC_HOOK_CODE, @HookCode, nil, ADDRESS, ADDRESS);
 
   // emulate machine code in infinite time (last param = 0), or when
   // finishing all the code.

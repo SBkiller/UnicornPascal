@@ -154,10 +154,10 @@ begin
   uc_reg_write(uc, UC_X86_REG_ESP, @r_esp);
 
   // tracing all instruction by having @begin > @end
-  uc_hook_add_2(uc, trace1, UC_HOOK_CODE, @HookCode, nil, 1, 0);
+  uc_hook_add(uc, trace1, UC_HOOK_CODE, @HookCode, nil, 1, 0);
 
   // handle interrupt ourself
-  uc_hook_add_0(uc, trace2, UC_HOOK_INTR, @HookIntr, nil);
+  uc_hook_add(uc, trace2, UC_HOOK_INTR, @HookIntr, nil);
 
   WriteLn;
   WriteLn('>>> Start tracing this Linux code');

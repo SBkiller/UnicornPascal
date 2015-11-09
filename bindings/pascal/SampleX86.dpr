@@ -222,10 +222,10 @@ begin
   uc_reg_write(uc, UC_X86_REG_EDX, @r_edx);
 
   // tracing all basic blocks with customized callback
-  uc_hook_add_2(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
+  uc_hook_add(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
 
   // tracing all instruction by having @begin > @end
-  uc_hook_add_2(uc, trace2, UC_HOOK_CODE, @HookCode, nil, 1, 0);
+  uc_hook_add(uc, trace2, UC_HOOK_CODE, @HookCode, nil, 1, 0);
 
   // emulate machine code in infinite time
   err := uc_emu_start(uc, ADDRESS, ADDRESS + SizeOf(X86_CODE32) - 1, 0, 0);
@@ -278,10 +278,10 @@ begin
   end;
 
   // tracing 1 basic block with customized callback
-  uc_hook_add_2(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, ADDRESS, ADDRESS);
+  uc_hook_add(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, ADDRESS, ADDRESS);
 
   // tracing 1 instruction at ADDRESS
-  uc_hook_add_2(uc, trace2, UC_HOOK_CODE, @HookCode, nil, ADDRESS, ADDRESS);
+  uc_hook_add(uc, trace2, UC_HOOK_CODE, @HookCode, nil, ADDRESS, ADDRESS);
 
   // emulate machine code in infinite time
   err := uc_emu_start(uc, ADDRESS, ADDRESS + SizeOf(X86_CODE32_JUMP) - 1, 0, 0);
@@ -375,10 +375,10 @@ begin
   uc_reg_write(uc, UC_X86_REG_EDX, @r_edx);
 
   // tracing all basic blocks with customized callback
-  uc_hook_add_2(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
+  uc_hook_add(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
 
   // tracing all instruction by having @begin > @end
-  uc_hook_add_2(uc, trace2, UC_HOOK_CODE, @HookCode, nil, 1, 0);
+  uc_hook_add(uc, trace2, UC_HOOK_CODE, @HookCode, nil, 1, 0);
 
   err := uc_emu_start(uc, ADDRESS, ADDRESS + SizeOf(X86_CODE32_MEM_READ) - 1, 0, 0);
   if (err <> UC_ERR_OK) then begin
@@ -430,13 +430,13 @@ begin
   uc_reg_write(uc, UC_X86_REG_EDX, @r_edx);
 
   // tracing all basic blocks with customized callback
-  uc_hook_add_2(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
+  uc_hook_add(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
 
   // tracing all instruction by having @begin > @end
-  uc_hook_add_2(uc, trace2, UC_HOOK_CODE, @HookCode, nil, 1, 0);
+  uc_hook_add(uc, trace2, UC_HOOK_CODE, @HookCode, nil, 1, 0);
 
   // intercept invalid memory events
-  uc_hook_add_0(uc, trace3, UC_HOOK_MEM_READ_UNMAPPED or UC_HOOK_MEM_WRITE_UNMAPPED, @HookMemInvalid, nil);
+  uc_hook_add(uc, trace3, UC_HOOK_MEM_READ_UNMAPPED or UC_HOOK_MEM_WRITE_UNMAPPED, @HookMemInvalid, nil);
 
   err := uc_emu_start(uc, ADDRESS, ADDRESS + SizeOf(X86_CODE32_MEM_WRITE) - 1, 0, 0);
   if (err <> UC_ERR_OK) then begin
@@ -500,10 +500,10 @@ begin
   uc_reg_write(uc, UC_X86_REG_EDX, @r_edx);
 
   // tracing all basic blocks with customized callback
-  uc_hook_add_2(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
+  uc_hook_add(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
 
   // tracing all instruction by having @begin > @end
-  uc_hook_add_2(uc, trace2, UC_HOOK_CODE, @HookCode, nil, 1, 0);
+  uc_hook_add(uc, trace2, UC_HOOK_CODE, @HookCode, nil, 1, 0);
 
   err := uc_emu_start(uc, ADDRESS, ADDRESS + SizeOf(X86_CODE32_JMP_INVALID) - 1, 0, 0);
   if (err <> UC_ERR_OK) then begin
@@ -554,15 +554,15 @@ begin
   uc_reg_write(uc, UC_X86_REG_EDX, @r_edx);
 
   // tracing all basic blocks with customized callback
-  uc_hook_add_2(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
+  uc_hook_add(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
 
   // tracing all instruction by having @begin > @end
-  uc_hook_add_2(uc, trace2, UC_HOOK_CODE, @HookCode, nil, 1, 0);
+  uc_hook_add(uc, trace2, UC_HOOK_CODE, @HookCode, nil, 1, 0);
 
   // uc IN instruction
-  uc_hook_add_1(uc, trace3, UC_HOOK_INSN, @HookIn, nil, UC_X86_INS_IN);
+  uc_hook_add(uc, trace3, UC_HOOK_INSN, @HookIn, nil, UC_X86_INS_IN);
   // uc OUT instruction
-  uc_hook_add_1(uc, trace4, UC_HOOK_INSN, @HookOut, nil, UC_X86_INS_OUT);
+  uc_hook_add(uc, trace4, UC_HOOK_INSN, @HookOut, nil, UC_X86_INS_OUT);
 
   err := uc_emu_start(uc, ADDRESS, ADDRESS + SizeOf(X86_CODE32_INOUT) - 1, 0, 0);
   if (err <> UC_ERR_OK) then begin
@@ -641,15 +641,15 @@ begin
   uc_reg_write(uc, UC_X86_REG_R15, @r15);
 
   // tracing all basic blocks with customized callback
-  uc_hook_add_2(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
+  uc_hook_add(uc, trace1, UC_HOOK_BLOCK, @HookBlock, nil, 1, 0);
 
   // tracing all instruction by having @begin > @end
-  uc_hook_add_2(uc, trace2, UC_HOOK_CODE, @HookCode64, nil, ADDRESS, ADDRESS + 20);
+  uc_hook_add(uc, trace2, UC_HOOK_CODE, @HookCode64, nil, ADDRESS, ADDRESS + 20);
 
   // tracing all memory WRITE access (with @begin > @end)
-  uc_hook_add_2(uc, trace3, UC_HOOK_MEM_WRITE, @HookMem64, nil, 1, 0);
+  uc_hook_add(uc, trace3, UC_HOOK_MEM_WRITE, @HookMem64, nil, 1, 0);
   // tracing all memory READ access (with @begin > @end)
-  uc_hook_add_2(uc, trace4, UC_HOOK_MEM_READ, @HookMem64, nil, 1, 0);
+  uc_hook_add(uc, trace4, UC_HOOK_MEM_READ, @HookMem64, nil, 1, 0);
 
   err := uc_emu_start(uc, ADDRESS, ADDRESS + SizeOf(X86_CODE64) - 1, 0, 0);
   if (err <> UC_ERR_OK) then begin
@@ -720,7 +720,7 @@ begin
   end;
 
   // hook interrupts for syscall
-  uc_hook_add_1(uc, trace1, UC_HOOK_INSN, @HookSyscall, nil, UC_X86_INS_SYSCALL);
+  uc_hook_add(uc, trace1, UC_HOOK_INSN, @HookSyscall, nil, UC_X86_INS_SYSCALL);
 
   // initialize machine registers
   uc_reg_write(uc, UC_X86_REG_RAX, @rax);
