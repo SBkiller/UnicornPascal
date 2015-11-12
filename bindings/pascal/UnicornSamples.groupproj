@@ -24,6 +24,9 @@
         <Projects Include="shellcode.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="mem_apis.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -95,14 +98,23 @@
     <Target Name="shellcode:Make">
         <MSBuild Projects="shellcode.dproj" Targets="Make"/>
     </Target>
+    <Target Name="mem_apis">
+        <MSBuild Projects="mem_apis.dproj"/>
+    </Target>
+    <Target Name="mem_apis:Clean">
+        <MSBuild Projects="mem_apis.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="mem_apis:Make">
+        <MSBuild Projects="mem_apis.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="SampleArm64;SampleX86;SampleSparc;SampleMips;SampleM68k;SampleArm;shellcode"/>
+        <CallTarget Targets="SampleArm64;SampleX86;SampleSparc;SampleMips;SampleM68k;SampleArm;shellcode;mem_apis"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="SampleArm64:Clean;SampleX86:Clean;SampleSparc:Clean;SampleMips:Clean;SampleM68k:Clean;SampleArm:Clean;shellcode:Clean"/>
+        <CallTarget Targets="SampleArm64:Clean;SampleX86:Clean;SampleSparc:Clean;SampleMips:Clean;SampleM68k:Clean;SampleArm:Clean;shellcode:Clean;mem_apis:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="SampleArm64:Make;SampleX86:Make;SampleSparc:Make;SampleMips:Make;SampleM68k:Make;SampleArm:Make;shellcode:Make"/>
+        <CallTarget Targets="SampleArm64:Make;SampleX86:Make;SampleSparc:Make;SampleMips:Make;SampleM68k:Make;SampleArm:Make;shellcode:Make;mem_apis:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
