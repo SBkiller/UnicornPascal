@@ -2,10 +2,6 @@
 
 unit Arm64Const;
 
-{$IFDEF FPC}
-  {$MODE Delphi}
-{$ENDIF}
-
 interface
 
 const

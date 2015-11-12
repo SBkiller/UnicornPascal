@@ -2,10 +2,6 @@
 
 unit UnicornConst;
 
-{$IFDEF FPC}
-  {$MODE Delphi}
-{$ENDIF}
-
 interface
 
 const
@@ -60,6 +56,7 @@ const
   UC_ERR_WRITE_UNALIGNED = 17;
   UC_ERR_FETCH_UNALIGNED = 18;
   UC_ERR_HOOK_EXIST = 19;
+  UC_ERR_RESOURCE = 20;
   UC_MEM_READ = 16;
   UC_MEM_WRITE = 17;
   UC_MEM_FETCH = 18;
