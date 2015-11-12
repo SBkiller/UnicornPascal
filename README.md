@@ -39,4 +39,5 @@ Compiler
 * `SampleMips` Emulate MIPS
 * `SampleM68k` Emulate m68k
 * `shellcode` Sample code to trace code with Linux code with syscall
+* `mem_apis` Sample use of uc_mem_unmap, uc_mem_protect, and memory permissions
 
