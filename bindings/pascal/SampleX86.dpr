@@ -24,15 +24,15 @@ program SampleX86;
 {$ENDIF}
 
 {$ifdef MSWINDOWS}
-	{$apptype CONSOLE}
-	{$R *.res}
+  {$apptype CONSOLE}
+  {$R *.res}
 {$endif}
 
 uses
   SysUtils, Unicorn, UnicornConst, X86Const;
 
 const
-	// code to be emulated
+  // code to be emulated
   X86_CODE32: array[0..2] of Byte = ($41, $4a, $00); // INC ecx; DEC edx
   X86_CODE32_JUMP: array[0..8] of Byte = ($eb, $02, $90, $90, $90, $90, $90, $90, $00); // jmp 4; nop; nop; nop; nop; nop; nop
   X86_CODE32_LOOP: array[0..4] of Byte = ($41, $4a, $eb, $fe, $00); // INC ecx; DEC edx; JMP self-loop
@@ -43,14 +43,14 @@ const
   X86_CODE32_INOUT: array[0..7] of Byte = ($41, $E4, $3F, $4a, $E6, $46, $43, $00); // INC ecx; IN AL, 0x3f; DEC edx; OUT 0x46, AL; INC ebx
 
   X86_CODE64: array[0..75] of Byte = (
-  	$41, $BC, $3B, $B0, $28, $2A, $49, $0F, $C9, $90, $4D, $0F, $AD, $CF, $49, $87, $FD, $90, $48, $81,
+    $41, $BC, $3B, $B0, $28, $2A, $49, $0F, $C9, $90, $4D, $0F, $AD, $CF, $49, $87, $FD, $90, $48, $81,
     $D2, $8A, $CE, $77, $35, $48, $F7, $D9, $4D, $29, $F4, $49, $81, $C9, $F6, $8A, $C6, $53, $4D, $87,
     $ED, $48, $0F, $AD, $D2, $49, $F7, $D4, $48, $F7, $E1, $4D, $19, $C5, $4D, $89, $C5, $48, $F7, $D6,
     $41, $B8, $4F, $8D, $6B, $59, $4D, $87, $D0, $68, $6A, $1E, $09, $3C, $59, $00);
   X86_CODE16: array[0..2] of Byte = ($00, $00, $00);   // add   byte ptr [bx + si], al
-  X86_CODE64_SYSCALL: array[0..2] of Byte = ($0f, $0f, $00); // SYSCALL
+  X86_CODE64_SYSCALL: array[0..2] of Byte = ($0f, $05, $00); // SYSCALL
 
-	// memory address where emulation starts
+  // memory address where emulation starts
   ADDRESS = $1000000;
 
 // callback for tracing basic blocks
@@ -62,7 +62,7 @@ end;
 // callback for tracing instruction
 procedure HookCode(uc: uc_engine; address: UInt64; size: Cardinal; user_data: Pointer); cdecl;
 var
-	eflags: integer;
+  eflags: integer;
 begin
   WriteLn(Format('>>> Tracing instruction at 0x%x, instruction size = 0x%x', [address, size]));
   uc_reg_read(uc, UC_X86_REG_EFLAGS, @eflags);
@@ -72,7 +72,7 @@ end;
 // callback for tracing instruction
 procedure HookCode64(uc: uc_engine; address: UInt64; size: Cardinal; user_data: Pointer); cdecl;
 var
-	rip: UInt64;
+  rip: UInt64;
 begin
   WriteLn(Format('>>> Tracing instruction at 0x%x, instruction size = 0x%x', [address, size]));
   uc_reg_read(uc, UC_X86_REG_RIP, @rip);
@@ -82,8 +82,8 @@ end;
 function HookMemInvalid(uc: uc_engine; _type: uc_mem_type; address: UInt64; size: Cardinal; value: Int64; user_data: Pointer): LongBool; cdecl;
 begin
   case _type of
-  	UC_MEM_WRITE_UNMAPPED:
-    	begin
+    UC_MEM_WRITE_UNMAPPED:
+      begin
         WriteLn(Format('>>> Missing memory is being WRITE at 0x%x, data size = %u, data value = 0x%x', [address, size, value]));
         // map this memory in with 2MB in size
         uc_mem_map(uc, $aaaa0000, 2 * 1024*1024, UC_PROT_ALL);
@@ -101,44 +101,44 @@ end;
 procedure HookMem64(uc: uc_engine; _type: uc_mem_type; address: UInt64; size: Cardinal; value: Int64; user_data: Pointer); cdecl;
 begin
   case _type of
-  	UC_MEM_READ:
-    	begin
+    UC_MEM_READ:
+      begin
         WriteLn(Format('>>> Memory is being READ at 0x%x, data size = %u', [address, size]));
       end;
     UC_MEM_WRITE:
-    	begin
+      begin
         WriteLn(Format('>>> Memory is being WRITE at 0x%x, data size = %u, data value = 0x%x', [address, size, value]));
       end;
-	end;
+  end;
 end;
 
 // callback for IN instruction (X86).
 // this returns the data read from the port
 function HookIn(uc: uc_engine; port: UInt32; size: integer; user_data: Pointer): Uint32; cdecl;
 var
-	eip: UInt32;
+  eip: UInt32;
 begin
   uc_reg_read(uc, UC_X86_REG_EIP, @eip);
   WriteLn(Format('--- reading from port 0x%x, size: %u, address: 0x%x', [port, size, eip]));
   case size of
-  	1:
-    	begin
+    1:
+      begin
         // read 1 byte to AL
         Result := $f1;
       end;
     2:
-    	begin
+      begin
         // read 2 byte to AX
         Result := $f2;
       end;
     4:
-    	begin
+      begin
         // read 4 byte to EAX
         Result := $f4;
       end;
     else
-    	begin
-      	// should never reach this
+      begin
+        // should never reach this
         Result := 0;
       end;
   end;
@@ -147,28 +147,28 @@ end;
 // callback for OUT instruction (X86).
 procedure HookOut(uc: uc_engine; port: UInt32; size: integer; value: UInt32; user_data: Pointer); cdecl;
 var
-	tmp, eip: UInt32;
+  tmp, eip: UInt32;
 begin
   uc_reg_read(uc, UC_X86_REG_EIP, @eip);
   WriteLn(Format('--- writing to port 0x%x, size: %u, value: 0x%x, address: 0x%x', [port, size, value, eip]));
 
   // confirm that value is indeed the value of AL/AX/EAX
   case size of
-  	1:
-    	begin
+    1:
+      begin
         uc_reg_read(uc, UC_X86_REG_AL, @tmp);
       end;
-  	2:
-    	begin
+    2:
+      begin
         uc_reg_read(uc, UC_X86_REG_AX, @tmp);
       end;
-  	4:
-    	begin
+    4:
+      begin
         uc_reg_read(uc, UC_X86_REG_EAX, @tmp);
       end;
     else
-    	begin
-      	// should never reach this
+      begin
+        // should never reach this
         Exit;
       end;
   end;
@@ -178,25 +178,25 @@ end;
 // callback for SYSCALL instruction (X86).
 procedure HookSyscall(uc: uc_engine; user_data: Pointer); cdecl;
 var
-	rax: UInt64;
+  rax: UInt64;
 begin
   uc_reg_read(uc, UC_X86_REG_RAX, @rax);
   if (rax = $100) then begin
     rax := $200;
     uc_reg_write(uc, UC_X86_REG_RAX, @rax);
   end else
-  	WriteLn(Format('ERROR: was not expecting rax=0x%x in syscall', [rax]));
+    WriteLn(Format('ERROR: was not expecting rax=0x%x in syscall', [rax]));
 end;
 
 procedure TestI386;
 var
-	uc: uc_engine;
+  uc: uc_engine;
   err: uc_err;
   tmp: UInt32;
   trace1, trace2: uc_hook;
   r_ecx, r_edx: integer;
 begin
-	r_ecx := $1234;     // ECX register
+  r_ecx := $1234;     // ECX register
   r_edx := $7890;     // EDX register
 
   WriteLn('Emulate i386 code');
@@ -204,7 +204,7 @@ begin
   // Initialize emulator in X86-32bit mode
   err := uc_open(UC_ARCH_X86, UC_MODE_32, uc);
   if (err <> UC_ERR_OK) then begin
-  	WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
+    WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
     Exit;
   end;
 
@@ -254,7 +254,7 @@ end;
 
 procedure TestI386Jump;
 var
-	uc: uc_engine;
+  uc: uc_engine;
   err: uc_err;
   trace1, trace2: uc_hook;
 begin
@@ -264,7 +264,7 @@ begin
   // Initialize emulator in X86-32bit mode
   err := uc_open(UC_ARCH_X86, UC_MODE_32, uc);
   if (err <> UC_ERR_OK) then begin
-  	WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
+    WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
     Exit;
   end;
 
@@ -295,11 +295,11 @@ end;
 
 procedure TestI386Loop;
 var
-	uc: uc_engine;
+  uc: uc_engine;
   err: uc_err;
   r_ecx, r_edx: integer;
 begin
-	r_ecx := $1234;     // ECX register
+  r_ecx := $1234;     // ECX register
   r_edx := $7890;     // EDX register
   WriteLn('===================================');
   WriteLn('Emulate i386 code that loop forever');
@@ -307,7 +307,7 @@ begin
   // Initialize emulator in X86-32bit mode
   err := uc_open(UC_ARCH_X86, UC_MODE_32, uc);
   if (err <> UC_ERR_OK) then begin
-  	WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
+    WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
     Exit;
   end;
 
@@ -344,12 +344,12 @@ end;
 
 procedure TestI386InvalidMemRead;
 var
-	uc: uc_engine;
+  uc: uc_engine;
   err: uc_err;
   trace1, trace2: uc_hook;
   r_ecx, r_edx: integer;
 begin
-	r_ecx := $1234;     // ECX register
+  r_ecx := $1234;     // ECX register
   r_edx := $7890;     // EDX register
   WriteLn('===================================');
   WriteLn('Emulate i386 code that read from invalid memory');
@@ -357,7 +357,7 @@ begin
   // Initialize emulator in X86-32bit mode
   err := uc_open(UC_ARCH_X86, UC_MODE_32, uc);
   if (err <> UC_ERR_OK) then begin
-  	WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
+    WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
     Exit;
   end;
 
@@ -398,13 +398,13 @@ end;
 
 procedure TestI386InvalidMemWrite;
 var
-	uc: uc_engine;
+  uc: uc_engine;
   err: uc_err;
   trace1, trace2, trace3: uc_hook;
   r_ecx, r_edx: integer;
   tmp: UInt32;
 begin
-	r_ecx := $1234;     // ECX register
+  r_ecx := $1234;     // ECX register
   r_edx := $7890;     // EDX register
   WriteLn('===================================');
   WriteLn('Emulate i386 code that write to invalid memory');
@@ -412,7 +412,7 @@ begin
   // Initialize emulator in X86-32bit mode
   err := uc_open(UC_ARCH_X86, UC_MODE_32, uc);
   if (err <> UC_ERR_OK) then begin
-  	WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
+    WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
     Exit;
   end;
 
@@ -469,12 +469,12 @@ end;
 
 procedure TestI386JumpInvalid;
 var
-	uc: uc_engine;
+  uc: uc_engine;
   err: uc_err;
   trace1, trace2: uc_hook;
   r_ecx, r_edx: integer;
 begin
-	r_ecx := $1234;     // ECX register
+  r_ecx := $1234;     // ECX register
   r_edx := $7890;     // EDX register
   WriteLn('===================================');
   WriteLn('Emulate i386 code that jumps to invalid memory');
@@ -482,7 +482,7 @@ begin
   // Initialize emulator in X86-32bit mode
   err := uc_open(UC_ARCH_X86, UC_MODE_32, uc);
   if (err <> UC_ERR_OK) then begin
-  	WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
+    WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
     Exit;
   end;
 
@@ -523,12 +523,12 @@ end;
 
 procedure TestI386Inout;
 var
-	uc: uc_engine;
+  uc: uc_engine;
   err: uc_err;
   trace1, trace2, trace3, trace4: uc_hook;
   r_ecx, r_edx: integer;
 begin
-	r_ecx := $1234;     // ECX register
+  r_ecx := $1234;     // ECX register
   r_edx := $7890;     // EDX register
   WriteLn('===================================');
   WriteLn('Emulate i386 code with IN/OUT instructions');
@@ -536,7 +536,7 @@ begin
   // Initialize emulator in X86-32bit mode
   err := uc_open(UC_ARCH_X86, UC_MODE_32, uc);
   if (err <> UC_ERR_OK) then begin
-  	WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
+    WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
     Exit;
   end;
 
@@ -582,7 +582,7 @@ end;
 
 procedure TestX86_64;
 var
-	uc: uc_engine;
+  uc: uc_engine;
   err: uc_err;
   trace1, trace2, trace3, trace4: uc_hook;
   rax, rbx, rcx, rdx, rsi, rdi, r8, r9, r10, r11, r12, r13, r14, r15, rsp: UInt64;
@@ -609,7 +609,7 @@ begin
   // Initialize emulator in X86-64bit mode
   err := uc_open(UC_ARCH_X86, UC_MODE_64, uc);
   if (err <> UC_ERR_OK) then begin
-  	WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
+    WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
     Exit;
   end;
 
@@ -694,19 +694,19 @@ end;
 
 procedure TestX86_64Syscall;
 var
-	uc: uc_engine;
+  uc: uc_engine;
   err: uc_err;
   trace1: uc_hook;
   rax: UInt64;
 begin
-	rax := $100;
+  rax := $100;
   WriteLn('===================================');
   WriteLn('Emulate x86_64 code with "syscall" instruction');
 
   // Initialize emulator in X86-64bit mode
   err := uc_open(UC_ARCH_X86, UC_MODE_64, uc);
   if (err <> UC_ERR_OK) then begin
-  	WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
+    WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
     Exit;
   end;
 
@@ -743,12 +743,12 @@ end;
 
 procedure TestX86_16;
 var
-	uc: uc_engine;
+  uc: uc_engine;
   err: uc_err;
   tmp: Word;
   eax, ebx, esi: UInt32;
 begin
-	eax := 7;
+  eax := 7;
   ebx := 5;
   esi := 6;
 
@@ -757,7 +757,7 @@ begin
   // Initialize emulator in X86-16bit mode
   err := uc_open(UC_ARCH_X86, UC_MODE_16, uc);
   if (err <> UC_ERR_OK) then begin
-  	WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
+    WriteLn(Format('Failed on uc_open() with error returned: %u', [err]));
     Exit;
   end;
 
@@ -795,7 +795,7 @@ begin
 end;
 
 begin
-	if ParamCount > 0 then begin
+  if ParamCount > 0 then begin
     if (ParamStr(1) = '-32') then begin
       TestI386;
       TestI386Inout;
@@ -821,5 +821,5 @@ begin
     end;
 
   end else
-  	WriteLn('Syntax: SampleX86 <-16|-32|-64>');
+    WriteLn('Syntax: SampleX86 <-16|-32|-64>');
 end.
